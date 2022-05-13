@@ -10,8 +10,6 @@
 
 // Defaults
 
-// Defaults
-
 variable "domain" {
   sensitive = false
   type      = string
@@ -23,13 +21,13 @@ variable "subdomain" {
   type      = string
 }
 
-variable "hcloud_ssh_key_terraform_id" {
-  type      = number
+variable "ssh_key" {
   sensitive = false
+  type      = string
 }
 
-variable "hcloud_network_kubernetes_id" {
-  type      = number
+variable "all_ssh_keys_list" {
+  type      = list(number)
   sensitive = false
 }
 
@@ -37,3 +35,5 @@ variable "hcloud_network_saltstack_id" {
   type      = number
   sensitive = false
 }
+
+

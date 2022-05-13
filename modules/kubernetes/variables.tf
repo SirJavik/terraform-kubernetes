@@ -21,7 +21,12 @@ variable "subdomain" {
   type      = string
 }
 
-variable "hcloud_ssh_key_terraform_id" {
+variable "ssh_key" {
+  sensitive = false
+  type      = string
+}
+
+variable "terraform_ssh_key_id" {
   type      = number
   sensitive = false
 }
@@ -34,4 +39,30 @@ variable "hcloud_network_kubernetes_id" {
 variable "hcloud_network_saltstack_id" {
   type      = number
   sensitive = false
+}
+
+// Kubernetes
+
+variable "kubernetes_node_count" {
+  type      = number
+  sensitive = false
+}
+
+// Saltstack
+
+variable "saltmaster_ip" {
+  type      = string
+  sensitive = false
+}
+
+// SSH Keys
+
+variable "controller_private_ssh_key" {
+  type      = string
+  sensitive = true
+}
+
+variable "nodes_private_ssh_keys" {
+  type      = list(string)
+  sensitive = true
 }

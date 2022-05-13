@@ -1,0 +1,13 @@
+#cloud-config
+
+salt_minion:
+  pkg_name: salt-minion
+  service_name: salt-minion
+  config_dir: /etc/salt
+
+  conf:
+    master: ${saltmaster_ip}
+    grains:
+      role:
+        - web
+    pki_dir: /etc/salt/pki/minion

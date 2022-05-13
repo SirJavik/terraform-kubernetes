@@ -12,3 +12,4 @@ output "kubernetes_controller_ips" {
   description = "IPs of Kubernetes Controller"
   value       = module.kubernetes.controller_ips
 }
+

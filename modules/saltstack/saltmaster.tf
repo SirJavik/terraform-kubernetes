@@ -22,15 +22,33 @@ resource "hcloud_server" "hcloud_saltstack_master" {
     "distribution"   = "debian-11"
   }
 
-  ssh_keys = [var.hcloud_ssh_key_terraform_id]
+  ssh_keys = var.all_ssh_keys_list
 
-  // Networks
-  network {
-    network_id = var.hcloud_network_kubernetes_id
+  // SETUP
+
+  provisioner "file" {
+    source      = abspath("${path.root}/scripts/saltstack-master-init.sh")
+    destination = "/tmp/saltstack-master-init.sh"
   }
 
-  network {
-    network_id = var.hcloud_network_saltstack_id
+  provisioner "remote-exec" {
+    inline = [
+      "/usr/bin/echo 'PERFORMING FIRST TIME INSTALL'",
+      "/usr/bin/bash /tmp/saltstack-master-init.sh",
+      "/usr/bin/echo 'DONE'"
+    ]
+  }
+
+  connection {
+    type        = "ssh"
+    user        = "root"
+    host        = self.ipv4_address
+    port        = 22
+    private_key = var.ssh_key
   }
 }
 
+resource "hcloud_server_network" "saltmaster_saltstack_network" {
+  server_id  = hcloud_server.hcloud_saltstack_master.id
+  network_id = var.hcloud_network_saltstack_id
+}

@@ -53,5 +53,13 @@ variable "ssh_private_key_terraform" {
   type      = string
 }
 
+// Kubernetes
+
+variable "kubernetes_nodes_count" {
+  sensitive = false
+  default   = 4
+  type      = number
+}
+
 
 
